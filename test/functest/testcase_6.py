@@ -212,7 +212,8 @@ def main():
     bgpvpn_1_id = bgpvpn_1['bgpvpn']['id']
     logger.debug("VPN created details: %s" % bgpvpn_1)
 
-    msg = ("Associate router '%s' to the VPN." % ROUTER_1_NAME)
+    msg = ("Associate router '{0}' to VPN '{1}'."
+           .format(ROUTER_1_NAME, vpn_1_name))
     logger.info(msg)
     results.add_to_summary(1, msg)
     results.add_to_summary(0, "-")
@@ -234,9 +235,9 @@ def main():
     bgpvpn_2_id = bgpvpn_1['bgpvpn']['id']
     logger.debug("VPN created details: %s" % bgpvpn_2)
 
-    msg = ("Associate network '%s' to the VPN." % NET_2_NAME)
+    msg = ("Associate network '{0}' to VPN '{1}'."
+           .format(NET_2_NAME, vpn_2_name))
     logger.info(msg)
-    results.add_to_summary(0, "-")
     results.add_to_summary(1, msg)
     results.add_to_summary(0, "-")
 
@@ -321,7 +322,7 @@ def main():
     results.add_to_summary(0, "-")
     results.add_to_summary(1, msg)
     results.add_to_summary(0, "-")
-    kwargs = {"import_targets": [TARGETS_1, TARGETS_2],
+    kwargs = {"import_targets": TARGETS_1,
               "export_targets": TARGETS_1,
               "name": vpn_1_name}
     bgpvpn_1 = os_utils.update_bgpvpn(neutron_client, bgpvpn_1_id, **kwargs)
@@ -331,8 +332,8 @@ def main():
     results.add_to_summary(0, "-")
     results.add_to_summary(1, msg)
     results.add_to_summary(0, "-")
-    kwargs = {"import_targets": [TARGETS_1, TARGETS_2],
-              "export_targets": TARGETS_2,
+    kwargs = {"import_targets": TARGETS_1,
+              "export_targets": TARGETS_1,
               "name": vpn_2_name}
     bgpvpn_2 = os_utils.update_bgpvpn(neutron_client, bgpvpn_2_id, **kwargs)
 

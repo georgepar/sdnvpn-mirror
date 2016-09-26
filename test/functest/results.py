@@ -80,11 +80,17 @@ class Results(object):
                 time.sleep(1)
                 timeout -= 1
                 if timeout == 0:
-                    self.test_result = "FAIL"
-                    logger.debug("[FAIL] Timeout reached for '%s'. "
-                                 "No ping output captured in the console log"
-                                 % vm_source.name)
-                    self.add_to_summary(2, "FAIL", test_case_name)
+                    if expected == "FAIL":
+                        msg = ("'%s' cannot ping '%s' due to timeout" %
+                              (vm_source.name, vm_target.name))
+                        logger.debug("[PASS] %s" % msg)
+                        self.add_to_summary(2, "PASS", test_case_name)
+                    else:
+                        self.test_result = "FAIL"
+                        logger.debug("[FAIL] Timeout reached for '%s'. "
+                                     "No ping output captured in the console log"
+                                     % vm_source.name)
+                        self.add_to_summary(2, "FAIL", test_case_name)
                     break
 
     def add_to_summary(self, num_cols, col1, col2=""):
