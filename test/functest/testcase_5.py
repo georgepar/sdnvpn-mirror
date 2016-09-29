@@ -300,7 +300,7 @@ def main():
     os_utils.create_router_association(
         neutron_client, bgpvpn2_id, router_2_id)
     test_utils.wait_for_bgp_router_assoc(
-        neutron_client, bgpvpn2_id, network_2_id)
+        neutron_client, bgpvpn2_id, router_2_id)
 
     logger.info("Waiting for the VMs to connect to each other using the"
                 " updated network configuration")
